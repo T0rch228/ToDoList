@@ -1,6 +1,6 @@
 {
   "name": "tm",
-  "version": "0.1.0",
+  "version": "beta 1.1.0",
   "private": true,
   "dependencies": {
     "cra-template": "1.2.0",

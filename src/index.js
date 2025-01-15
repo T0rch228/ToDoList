@@ -52,18 +52,6 @@ class TodoApp extends React.Component {
   }
 }
 
-/*class TodoList extends React.Component {
-  render() {
-    return (
-      <ul className="ml-8 mt-8">
-        {this.props.items.map(item => (
-          <li key={item.id}>{item.text} <input type="checkbox"></input></li>
-        ))}
-      </ul>
-    );
-  }
-}*/
-
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
@@ -92,7 +80,8 @@ class TodoList extends React.Component {
             <input 
               type="checkbox" 
               checked={!!this.state.checkedItems[item.id]} 
-              onChange={() => this.handleCheckboxChange(item.id)} 
+              onChange={() => this.handleCheckboxChange(item.id)}
+              className="ml-2"
             />
           </li>
         ))}
