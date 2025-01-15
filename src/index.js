@@ -52,17 +52,55 @@ class TodoApp extends React.Component {
   }
 }
 
-class TodoList extends React.Component {
+/*class TodoList extends React.Component {
   render() {
     return (
       <ul className="ml-8 mt-8">
         {this.props.items.map(item => (
-          <li key={item.id}>{item.text}</li>
+          <li key={item.id}>{item.text} <input type="checkbox"></input></li>
+        ))}
+      </ul>
+    );
+  }
+}*/
+
+class TodoList extends React.Component {
+  constructor(props) {
+    super(props);
+    // Создаем состояние, чтобы отслеживать, какие элементы отмечены
+    this.state = {
+      checkedItems: {},
+    };
+  }
+
+  // Метод для обработки изменения состояния checkbox
+  handleCheckboxChange = (id) => {
+    this.setState(prevState => ({
+      checkedItems: {
+        ...prevState.checkedItems,
+        [id]: !prevState.checkedItems[id], // Инвертируем состояние
+      },
+    }));
+  }
+
+  render() {
+    return (
+      <ul className="ml-8 mt-8">
+        {this.props.items.map(item => (
+          <li key={item.id} style={{ textDecoration: this.state.checkedItems[item.id] ? 'line-through' : 'none' }}>
+            {item.text}
+            <input 
+              type="checkbox" 
+              checked={!!this.state.checkedItems[item.id]} 
+              onChange={() => this.handleCheckboxChange(item.id)} 
+            />
+          </li>
         ))}
       </ul>
     );
   }
 }
+
 const app = ReactDOMClient.createRoot(document.getElementById('root'))
 
 app.render(<TodoApp />)
