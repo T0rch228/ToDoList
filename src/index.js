@@ -81,7 +81,7 @@ class TodoList extends React.Component {
               type="checkbox" 
               checked={!!this.state.checkedItems[item.id]} 
               onChange={() => this.handleCheckboxChange(item.id)}
-              className="ml-2"
+              className="ml-2 w-4 h-4"
             />
           </li>
         ))}
