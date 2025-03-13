@@ -1,5 +1,5 @@
-import React from "react"
-import * as ReactDOMClient from "react-dom/client"
+import React from "react";
+import * as ReactDOMClient from "react-dom/client";
 
 class TodoApp extends React.Component {
   constructor(props) {
@@ -7,6 +7,7 @@ class TodoApp extends React.Component {
     this.state = { items: [], text: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this); // Добавляем метод для удаления
   }
 
   render() {
@@ -27,7 +28,7 @@ class TodoApp extends React.Component {
             Добавить
           </button>
         </form>
-        <TodoList items={this.state.items} />
+        <TodoList items={this.state.items} onDelete={this.handleDelete} />
       </div>
     );
   }
@@ -50,23 +51,28 @@ class TodoApp extends React.Component {
       text: ''
     }));
   }
+
+  // Метод для удаления задачи
+  handleDelete(id) {
+    this.setState(state => ({
+      items: state.items.filter(item => item.id !== id)
+    }));
+  }
 }
 
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
-    // Создаем состояние, чтобы отслеживать, какие элементы отмечены
     this.state = {
       checkedItems: {},
     };
   }
 
-  // Метод для обработки изменения состояния checkbox
   handleCheckboxChange = (id) => {
     this.setState(prevState => ({
       checkedItems: {
         ...prevState.checkedItems,
-        [id]: !prevState.checkedItems[id], // Инвертируем состояние
+        [id]: !prevState.checkedItems[id],
       },
     }));
   }
@@ -83,6 +89,13 @@ class TodoList extends React.Component {
               onChange={() => this.handleCheckboxChange(item.id)}
               className="ml-2 w-4 h-4"
             />
+            {/* Кнопка удаления */}
+            <button 
+              onClick={() => this.props.onDelete(item.id)} 
+              className="ml-2 bg-red-500 text-white rounded-full px-2"
+            >
+              Del
+            </button>
           </li>
         ))}
       </ul>
@@ -90,6 +103,6 @@ class TodoList extends React.Component {
   }
 }
 
-const app = ReactDOMClient.createRoot(document.getElementById('root'))
+const app = ReactDOMClient.createRoot(document.getElementById('root'));
 
-app.render(<TodoApp />)
+app.render(<TodoApp />);
